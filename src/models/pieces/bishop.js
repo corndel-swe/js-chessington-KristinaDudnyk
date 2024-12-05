@@ -1,29 +1,48 @@
 import Square from "../square.js";
 import Piece from "./piece.js";
+import King from "./king.js";
 
-export default class Bishop {
+class Bishop extends Piece {
   constructor(player) {
-    this.player = player;
+    super(player);
   }
 
   getAvailableMoves(board) {
-    // get the square currently occupied by the pawn
-    let moves = [];
+    const { row: rowStart, col: colStart } = board.findPiece(this);
+    const moves = [];
 
-    const { row: startRow, col: startCol } = board.findPiece(this);
+    const dirs = [
+      { dr: 1, dc: 1 },
+      { dr: 1, dc: -1 },
+      { dr: -1, dc: 1 },
+      { dr: -1, dc: -1 },
+    ];
 
-    for (let step = 1; step < 8; step++) {
-      let row = startRow - step; // Moving up
-      let col = startCol + step; // Moving right
+    for (let { dr, dc } of dirs) {
+      // first vector is { dr: 1, dc: 1 }
+      let candidate = new Square(rowStart + dr, colStart + dc); // 2 + 1 , 3 + 1 = (3, 4) ==> last is (7,8)
+      while (board.contains(candidate)) {
+        // checking if the pies is not outside of thee board
+        // Check if there is a piece in the way
+        const capturable = board.getPiece(candidate); // is there a piece?
+        if (capturable) {
+          if (
+            capturable.player !== this.player &&
+            !(capturable instanceof King)
+          ) {
+            moves.push(candidate); // valid move
+          }
+          break;
+        }
 
-      if (row < 0 || col > 7) break; // Check if out of bounds
-      moves.push([row, col]); // Add valid move
+        moves.push(candidate);
+
+        candidate = new Square(candidate.row + dr, candidate.col + dc);
+      }
     }
+
     return moves;
   }
-
-  moveTo(board, newSquare) {
-    const currentSquare = board.findPiece(this);
-    board.movePiece(currentSquare, newSquare);
-  }
 }
+
+export default Bishop;

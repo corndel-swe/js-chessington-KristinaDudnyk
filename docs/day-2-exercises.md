@@ -61,5 +61,5 @@ To run the tests for this exercise, run `npm run test:d2e3` in your terminal.
 
 - [x] Make all the shape classes inherit from `Shape`.
 
-- [ ] Override the `getArea` and `getPerimeter` methods in each subclass to
+- [x] Override the `getArea` and `getPerimeter` methods in each subclass to
       return the correct values for that shape.
