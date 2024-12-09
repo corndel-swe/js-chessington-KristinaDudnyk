@@ -9,19 +9,24 @@ export default class Pawn extends Piece {
   }
 
   getAvailableMoves(board) {
-    // get the square currently occupied by the pawn
+    // Get the square currently occupied by the pawn
     let location = board.findPiece(this);
 
-    // the list of valid moves
+    // The list of valid moves
     let moves = [];
 
-    if (this.player === Player.WHITE) {
-      // white pawns can move "up" by one
-      moves.push(new Square(location.row + 1, location.col));
-    } else {
-      // black pawns can move "down" by one
-      moves.push(new Square(location.row - 1, location.col));
+    // Determine the direction of movement
+    const direction = this.player === Player.WHITE ? 1 : -1;
+
+    // Move one square forward
+    moves.push(new Square(location.row + direction, location.col));
+
+    // Check if the pawn is in its starting position for the two-square move
+    const startingRow = this.player === Player.WHITE ? 1 : 6;
+    if (location.row === startingRow) {
+      moves.push(new Square(location.row + 2 * direction, location.col));
     }
+
     return moves;
   }
 }

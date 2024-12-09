@@ -32,10 +32,10 @@ all classes.
       some tests are "pending". To begin with, we will only focus on the tests
       which are not pending.
 
-- [ ] Choose a piece, and work on its `getAvailableMoves` method to make its
+- [x] Choose a piece, and work on its `getAvailableMoves` method to make its
       tests pass.
 
-- [ ] Move onto a new piece, and keep going until all non-pending tests are
+- [x] Move onto a new piece, and keep going until all non-pending tests are
       passing.
 
 ## Moving on
